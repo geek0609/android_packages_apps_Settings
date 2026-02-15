@@ -18,22 +18,22 @@ package com.android.settings.lineage.health;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.preference.Preference;
 import androidx.preference.PreferenceViewHolder;
 
 import com.android.internal.lineage.health.HealthInterface;
+import com.google.android.material.slider.Slider;
 
 import com.android.settings.R;
 
 public class ChargingLimitPreference extends Preference
-        implements SeekBar.OnSeekBarChangeListener {
+    implements Slider.OnChangeListener, Slider.OnSliderTouchListener {
     private static final String TAG = ChargingLimitPreference.class.getSimpleName();
 
     private TextView mChargingLimitValue;
-    private SeekBar mChargingLimitBar;
+    private Slider mChargingLimitBar;
 
     private final HealthInterface mHealthInterface;
 
@@ -51,32 +51,33 @@ public class ChargingLimitPreference extends Preference
 
         mChargingLimitValue = (TextView) holder.findViewById(R.id.value);
 
-        mChargingLimitBar = (SeekBar) holder.findViewById(R.id.seekbar_widget);
-        mChargingLimitBar.setOnSeekBarChangeListener(this);
+        mChargingLimitBar = (Slider) holder.findViewById(R.id.slider_widget);
+        mChargingLimitBar.addOnChangeListener(this);
+        mChargingLimitBar.addOnSliderTouchListener(this);
 
         int currLimit = getSetting();
-        mChargingLimitBar.setProgress(currLimit);
+        mChargingLimitBar.setValue(currLimit);
         updateValue(currLimit);
     }
 
     @Override
-    public void onStartTrackingTouch(final SeekBar seekBar) {
+    public void onStartTrackingTouch(final Slider slider) {
     }
 
     @Override
-    public void onStopTrackingTouch(final SeekBar seekBar) {
-        setSetting(seekBar.getProgress());
+    public void onStopTrackingTouch(final Slider slider) {
+        setSetting(Math.round(slider.getValue()));
     }
 
     @Override
-    public void onProgressChanged(final SeekBar seekBar, final int progress,
+    public void onValueChange(final Slider slider, final float value,
             final boolean fromUser) {
-        updateValue(progress);
+        updateValue(Math.round(value));
     }
 
     public void setValue(final int value) {
         if (mChargingLimitBar != null) {
-            mChargingLimitBar.setProgress(value);
+            mChargingLimitBar.setValue(value);
         }
         updateValue(value);
     }

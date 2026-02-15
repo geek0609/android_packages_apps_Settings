@@ -16,26 +16,26 @@
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:paddingVertical="6dip"
+    android:paddingTop="16dp"
+    android:paddingBottom="8dp"
     android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
     android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-    android:background="?android:attr/selectableItemBackground"
     android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@android:id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textAppearance="?android:attr/textAppearanceListItem"
             android:textColor="?android:attr/textColorPrimary"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal" />
@@ -52,12 +52,16 @@
 
     </RelativeLayout>
 
-    <SeekBar
-        android:id="@+id/seekbar_widget"
+    <com.google.android.material.slider.Slider
+        android:id="@+id/slider_widget"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingVertical="15dip"
-        android:min="70"
-        android:max="100" />
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:theme="@style/Theme.Material3.DynamicColors.DayNight"
+        android:valueFrom="70"
+        android:valueTo="100"
+        android:stepSize="1"
+        app:tickVisible="false"
+        app:labelBehavior="gone" />
 
 </LinearLayout>

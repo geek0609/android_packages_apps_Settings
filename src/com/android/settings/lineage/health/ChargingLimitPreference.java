@@ -49,7 +49,7 @@ public class ChargingLimitPreference extends Preference
     public void onBindViewHolder(final PreferenceViewHolder holder) {
         super.onBindViewHolder(holder);
 
-        mChargingLimitValue = (TextView) holder.findViewById(R.id.value);
+        mChargingLimitValue = (TextView) holder.findViewById(R.id.summary);
 
         mChargingLimitBar = (Slider) holder.findViewById(R.id.slider_widget);
         mChargingLimitBar.addOnChangeListener(this);
@@ -92,7 +92,9 @@ public class ChargingLimitPreference extends Preference
 
     private void updateValue(final int value) {
         if (mChargingLimitValue != null) {
-            mChargingLimitValue.setText(String.format("%d%%", value));
+            mChargingLimitValue.setText(getContext().getString(
+                    com.android.internal.R.string.charging_control_notification_content_limit,
+                    value));
         }
     }
 }
